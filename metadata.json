@@ -1,0 +1,6 @@
+{
+  "name": "Video Color Grading Studio",
+  "description": "Professional browser-based video color grading suite featuring real-time RGB histogram visualizer, cinematic looks, custom color wheels (Lift, Gamma, Gain), and an AI-powered grading generator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
