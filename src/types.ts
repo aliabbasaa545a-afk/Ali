@@ -210,6 +210,14 @@ export const SAMPLE_VIDEOS = [
     vibe: "Glistening neon-drenched urban streets at night - perfect for Cyberpunk Neon or Teal & Orange!"
   },
   {
+    id: "neon-dancer-shorts",
+    name: "Street Style Vibe (Shorts / Vertical)",
+    nameUrdu: "Street Style Dance (Vertical)",
+    url: "https://videos.pexels.com/video-files/5532765/5532765-sd_540_960_25fps.mp4",
+    poster: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=400",
+    vibe: "Dynamic portrait-oriented street fashion video - perfect for testing Shorts layout and Cyberpunk style!"
+  },
+  {
     id: "mountain-mist",
     name: "Misty Mountain Peaks",
     nameUrdu: "Dhundlay Pahad",

@@ -13,7 +13,9 @@ import {
   Eye,
   Split,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Smartphone,
+  Tv
 } from "lucide-react";
 
 interface VideoPlayerProps {
@@ -65,6 +67,7 @@ export default function VideoPlayer({
   const [splitPosition, setSplitPosition] = useState(50); // percentage for split compare
   const [isDraggingSplit, setIsDraggingSplit] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1);
+  const [isPortrait, setIsPortrait] = useState(false);
   const FPS = 24; // Standard cinema timeline frames per second
 
   // Lift, Gamma, Gain calculation for SVG filter properties
@@ -143,6 +146,11 @@ export default function VideoPlayer({
   const handleLoadedMetadata = () => {
     if (videoRef.current) {
       setDuration(videoRef.current.duration);
+      const width = videoRef.current.videoWidth;
+      const height = videoRef.current.videoHeight;
+      if (width && height) {
+        setIsPortrait(height > width);
+      }
     }
   };
 
@@ -357,7 +365,11 @@ export default function VideoPlayer({
     <div className="flex flex-col gap-4">
       <div
         ref={containerRef}
-        className="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-2xl border border-gray-800/60 select-none group"
+        className={`relative w-full rounded-xl overflow-hidden bg-black shadow-2xl border border-gray-800/60 select-none group transition-all duration-500 ease-in-out ${
+          isPortrait 
+            ? "aspect-[9/16] max-w-[340px] mx-auto ring-1 ring-amber-500/20" 
+            : "aspect-video w-full"
+        }`}
       >
         {/* Split Screen Comparing Layout */}
         {compareMode === "split" ? (
@@ -479,7 +491,7 @@ export default function VideoPlayer({
             )}
 
             {/* Mode Indicator Badge */}
-            <div className="absolute top-4 left-4 bg-gray-950/80 border border-gray-800 backdrop-blur-md text-gray-300 text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1.5 uppercase tracking-wider">
+            <div className="absolute top-4 left-4 bg-gray-950/80 border border-gray-800 backdrop-blur-md text-gray-300 text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1.5 uppercase tracking-wider z-10">
               {compareMode === "graded" ? (
                 <>
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
@@ -489,6 +501,21 @@ export default function VideoPlayer({
                 <>
                   <Info className="w-3.5 h-3.5 text-gray-400" />
                   <span>Original Bypass</span>
+                </>
+              )}
+            </div>
+
+            {/* Dynamic Aspect Ratio/Format Badge */}
+            <div className="absolute top-4 right-4 bg-gray-950/85 border border-amber-500/30 backdrop-blur-md text-gray-300 text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1.5 uppercase tracking-wider select-none z-10">
+              {isPortrait ? (
+                <>
+                  <Smartphone className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                  <span className="text-amber-400 font-bold">Shorts (9:16)</span>
+                </>
+              ) : (
+                <>
+                  <Tv className="w-3.5 h-3.5 text-blue-400" />
+                  <span>Landscape (16:9)</span>
                 </>
               )}
             </div>
